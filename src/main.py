@@ -1,6 +1,5 @@
 import pandas as pd
+from preprocess import get_law_data
 
-PATH = "./data/omophobia.csv"
-
-df = pd.read_csv(PATH, encoding='latin-1')
-print(df.head())
+df = get_law_data()
+print(df)
