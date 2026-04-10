@@ -1,0 +1,15 @@
+[tool.poetry]
+name = "idv-project"
+version = "0.1.0"
+description = ""
+authors = ["Uxusino Uxusone <89293277+Uxusino@users.noreply.github.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.12"
+plotly = "^6.7.0"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
