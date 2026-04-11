@@ -9,9 +9,15 @@ EU = ["Austria", "Belgium", "Bulgaria", "Cyprus", "Czech Republic",
       "Netherlands", "Poland", "Portugal", "Romania", "Sweden",
       "Slovenia", "Slovakia", "United Kingdom"]
 
-def get_law_data():
+def get_law_data() -> pd.DataFrame:
     df = pd.read_csv(OMOPHOBIA)
     df = df[df["COUNTRY"].isin(EU)]
-    df.drop(columns=["Unnamed: 14", "Unnamed: 15", "MAX PENALTY", "DATE OF DECRIM"], inplace=True)
+    df.drop(columns=["Unnamed: 14", "Unnamed: 15", "MAX PENALTY", "DATE OF DECRIM", "CSSSA LEGAL?"], inplace=True)
     df.replace(["YES", "LIMITED", "NO"], [2, 1, 0], inplace=True)
     return df
+
+def sum_laws(df: pd.DataFrame) -> pd.DataFrame:
+    df_summable = df.drop(columns=["COUNTRY"])
+    df2 = df.copy()
+    df2["Sum"] = pd.to_numeric(df_summable.sum(axis = 1), errors='coerce')
+    return df2
