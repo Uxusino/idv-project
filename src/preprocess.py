@@ -16,8 +16,9 @@ def get_law_data() -> pd.DataFrame:
     df.replace(["YES", "LIMITED", "NO"], [2, 1, 0], inplace=True)
     return df
 
-def sum_laws(df: pd.DataFrame) -> pd.DataFrame:
-    df_summable = df.drop(columns=["COUNTRY"])
-    df2 = df.copy()
+def sum_laws(df: pd.DataFrame, values: list) -> pd.DataFrame:
+    df_summable = df.drop(columns=["COUNTRY"])[values]
+    df2 = df_summable.copy()
     df2["Sum"] = pd.to_numeric(df_summable.sum(axis = 1), errors='coerce')
+    df2["COUNTRY"] = df["COUNTRY"]
     return df2
