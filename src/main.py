@@ -35,7 +35,8 @@ app.layout = html.Div([
                         'BAN CONV. THERAPIES', 'SAME SEX MARRIAGE', 'CIVIL UNIONS',
                         'JOINT ADOPTION', 'SECOND PARENT ADOPTION'],
                     id="checklist",
-                )
+                ),
+                dcc.Button("Show Average", id='averageButton')
             ],
             style={
                 'padding': 10
@@ -43,7 +44,7 @@ app.layout = html.Div([
         ),
         html.Div(
             children = [
-                dcc.Graph(id="graph"),
+                dcc.Graph(id="graph")
             ],
             style={
                 'padding': 10
