@@ -1,8 +1,7 @@
 import pandas as pd
 import numpy as np
 import plotly.express as px
-import json
-from dash import Dash, dcc, html, Input, Output
+from dash import Dash, dcc, html, Input, Output, State
 from preprocess import get_law_data, sum_laws, question_results, get_questions, SURVEYS
 
 LAW_DF = get_law_data()
@@ -36,7 +35,7 @@ app.layout = html.Div([
                         'JOINT ADOPTION', 'SECOND PARENT ADOPTION'],
                     id="checklist",
                 ),
-                dcc.Button("Show Average", id='averageButton')
+
             ],
             style={
                 'padding': 10
@@ -108,7 +107,7 @@ def display_choropleth(law_values):
     Input("graph", "clickData"),
     Input("checklistSubset", "value"),
     Input("dropdownQuestion", "value"),
-    Input("dropdownSurvey", "value")
+    Input("dropdownSurvey", "value"),
 )
 def display_bars(clickedCountry, subset_values, dropdown_question, dropdown_survey):
     
