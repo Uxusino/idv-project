@@ -1,7 +1,7 @@
 import pandas as pd
 import numpy as np
 import plotly.express as px
-from dash import Dash, dcc, html, Input, Output, State
+from dash import Dash, dcc, html, Input, Output, State, ctx
 from preprocess import get_law_data, sum_laws, question_results, get_questions, SURVEYS
 
 LAW_DF = get_law_data()
@@ -43,7 +43,11 @@ app.layout = html.Div([
         ),
         html.Div(
             children = [
-                dcc.Graph(id="graph")
+                dcc.Graph(
+                    id="graph",
+                    config={"displayModeBar": False},
+                    clear_on_unhover=True
+                )
             ],
             style={
                 'padding': 10
@@ -61,6 +65,7 @@ app.layout = html.Div([
                 dcc.Dropdown(
                     id="dropdownQuestion"
                 ),
+                dcc.Store(id="selectedCountry", data=None),
                 dcc.Graph(id="bars"),
                 html.Pre(id="bars_0")
             ],
@@ -87,7 +92,7 @@ def display_choropleth(law_values):
                     range_color=(np.min(df_sums["Sum"]), np.max(df_sums["Sum"])),
                     scope="europe",
                     )
-    fig.update_layout(margin={"r":0,"t":0,"l":0,"b":0})
+    fig.update_layout(margin={"r":0,"t":0,"l":0,"b":0}, clickmode="event+select")
     fig.update_geos(
         scope="europe",
         resolution=50
@@ -97,23 +102,26 @@ def display_choropleth(law_values):
 
 @app.callback(
     Output("bars", "figure"),
-    Input("graph", "clickData"),
+    Output("selectedCountry", "data"),
+    Input("graph", "selectedData"),
     Input("dropdownQuestion", "value"),
     Input("dropdownSurvey", "value"),
+    State("selectedCountry", "data"),
+    prevent_initial_call=True
 )
-def display_bars(clickedCountry, dropdown_question, dropdown_survey):
-    
-    if not clickedCountry:
+def display_bars(selectedData, dropdown_question, dropdown_survey, current):
+
+    if not selectedData:
         country = "Average"
     else:
-        country = clickedCountry['points'][0]['location']
+        country = selectedData["points"][0]["location"]
 
     df_q = question_results(dropdown_survey, dropdown_question, country)
 
     bars = px.bar(df_q, x="answer", y="percentage",
                   title=country, color="subset",
                   barmode="group")
-    return bars
+    return bars, country
 
 @app.callback(
     Output("dropdownQuestion", "options"),
