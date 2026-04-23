@@ -15,6 +15,13 @@ SURVEYS = {
     SURVEY_VIOLENCE: "Violence and harrasment"
 }
 
+QUESTION_FIXES = {
+    "open_at_work": "Have you been open about you being L, G, B or T at work?",
+    "open_at_school": "Have you been open about you being L, G, B or T at school?"
+}
+
+NUMERICAL_ANSWERS = ["g5"]
+
 EU = ["Austria", "Belgium", "Bulgaria", "Cyprus", "Czech Republic",
       "Germany", "Denmark", "Estonia", "Greece", "Spain",
       "Finland", "France", "Croatia", "Hungary", "Ireland",
@@ -38,9 +45,24 @@ def sum_laws(df: pd.DataFrame, values: list) -> pd.DataFrame:
 
 def get_questions(survey: str) -> dict:
     df = pd.read_csv(survey)
-    values = df["question_label"].unique()
+
     keys = df["question_code"].unique()
-    questions = dict(zip(keys, values))
+    #print(keys)
+    values2 = []
+    for k in keys:
+        if k in QUESTION_FIXES.keys():
+            v = QUESTION_FIXES[k]
+            values2.append(v)
+            continue
+
+        v = df[df["question_code"] == k].iloc[0]
+        v = v["question_label"]
+        if k in QUESTION_FIXES.keys():
+            v = QUESTION_FIXES[k]
+        values2.append(v)
+
+    questions = dict(zip(keys, values2))
+
     return questions
 
 def question_results(survey: str, subsets: list[str], question: str, country: str) -> pd.DataFrame:
@@ -49,4 +71,6 @@ def question_results(survey: str, subsets: list[str], question: str, country: st
     df = df[df["CountryCode"] == country]
     answers_df = df[df["question_code"] == question]
     answers_df = answers_df[answers_df["subset"].isin(subsets)]
+    if question in NUMERICAL_ANSWERS:
+        answers_df["answer"] = pd.to_numeric(answers_df["answer"], errors="coerce")
     return answers_df
