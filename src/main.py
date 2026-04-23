@@ -90,6 +90,9 @@ app.layout = html.Div([
     ),
     
     ],
+    style={
+        'fontFamily': 'Arial'
+    }
 )
 
 @app.callback(
