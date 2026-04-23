@@ -1,13 +1,15 @@
+import os
 import pandas as pd
-import numpy as np
 
-OMOPHOBIA = "./data/omophobia.csv"
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
-SURVEY_VIOLENCE = "./data/LGBT_Survey_ViolenceAndHarassment.csv"
-SURVEY_DAILY = "./data/LGBT_Survey_DailyLife.csv"
-SURVEY_DISCRIMINATION = "./data/LGBT_Survey_Discrimination.csv"
-SURVEY_RIGHTS = "./data/LGBT_Survey_RightsAwareness.csv"
-SURVEY_TRANS = "./data/LGBT_Survey_TransgenderSpecificQuestions.csv"
+OMOPHOBIA = os.path.join(BASE_DIR, "omophobia.csv")
+
+SURVEY_VIOLENCE = os.path.join(BASE_DIR, "LGBT_Survey_ViolenceAndHarassment.csv")
+SURVEY_DAILY = os.path.join(BASE_DIR, "LGBT_Survey_DailyLife.csv")
+SURVEY_DISCRIMINATION = os.path.join(BASE_DIR, "LGBT_Survey_Discrimination.csv")
+SURVEY_RIGHTS = os.path.join(BASE_DIR, "LGBT_Survey_RightsAwareness.csv")
+SURVEY_TRANS = os.path.join(BASE_DIR, "LGBT_Survey_TransgenderSpecificQuestions.csv")
 
 SURVEYS = {
     SURVEY_DAILY: "Daily life",
