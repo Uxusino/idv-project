@@ -5,6 +5,7 @@ from dash import Dash, dcc, html, Input, Output, State, ctx
 from preprocess import get_law_data, sum_laws, question_results, get_questions, SURVEYS
 
 LAW_DF = get_law_data()
+COLORS = ["#FF9A56", "#26CEAA", "#D60270", "#0038A8", "#5BCEFA"]
 
 app = Dash(__name__)
 
@@ -38,7 +39,9 @@ app.layout = html.Div([
 
             ],
             style={
-                'padding': 10
+                'padding': 10,
+                "wordWrap": "breakWord",
+                "max_width": 250
             }
         ),
         html.Div(
@@ -75,7 +78,8 @@ app.layout = html.Div([
         )],
         style={
             'display': 'flex',
-            'flexDirection': 'row'
+            'flexDirection': 'row',
+            'position': 'fixed'
         }
     )
 ])
@@ -120,6 +124,7 @@ def display_bars(selectedData, dropdown_question, dropdown_survey, current):
 
     bars = px.bar(df_q, x="answer", y="percentage",
                   title=country, color="subset",
+                  color_discrete_sequence=COLORS,
                   barmode="group")
     return bars, country
 
