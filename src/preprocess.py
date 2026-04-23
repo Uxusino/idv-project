@@ -57,8 +57,6 @@ def get_questions(survey: str) -> dict:
 
         v = df[df["question_code"] == k].iloc[0]
         v = v["question_label"]
-        if k in QUESTION_FIXES.keys():
-            v = QUESTION_FIXES[k]
         values2.append(v)
 
     questions = dict(zip(keys, values2))
