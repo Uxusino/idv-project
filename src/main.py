@@ -62,13 +62,6 @@ app.layout = html.Div([
                     id="dropdownQuestion"
                 ),
                 dcc.Graph(id="bars"),
-                html.P("Select subsets:"),
-                dcc.Checklist(
-                    options=["Lesbian", "Gay", "Bisexual women", "Bisexual men", "Transgender"],
-                    value=["Lesbian", "Gay", "Bisexual women", "Bisexual men", "Transgender"],
-                    id="checklistSubset",
-                    inline=True
-                ),
                 html.Pre(id="bars_0")
             ],
             style={
@@ -105,18 +98,17 @@ def display_choropleth(law_values):
 @app.callback(
     Output("bars", "figure"),
     Input("graph", "clickData"),
-    Input("checklistSubset", "value"),
     Input("dropdownQuestion", "value"),
     Input("dropdownSurvey", "value"),
 )
-def display_bars(clickedCountry, subset_values, dropdown_question, dropdown_survey):
+def display_bars(clickedCountry, dropdown_question, dropdown_survey):
     
     if not clickedCountry:
         country = "Average"
     else:
         country = clickedCountry['points'][0]['location']
 
-    df_q = question_results(dropdown_survey, subset_values, dropdown_question, country)
+    df_q = question_results(dropdown_survey, dropdown_question, country)
 
     bars = px.bar(df_q, x="answer", y="percentage",
                   title=country, color="subset",

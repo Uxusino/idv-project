@@ -63,12 +63,12 @@ def get_questions(survey: str) -> dict:
 
     return questions
 
-def question_results(survey: str, subsets: list[str], question: str, country: str) -> pd.DataFrame:
+def question_results(survey: str, question: str, country: str) -> pd.DataFrame:
     df = pd.read_csv(survey)
     df["percentage"] = pd.to_numeric(df["percentage"], errors="coerce")
     df = df[df["CountryCode"] == country]
     answers_df = df[df["question_code"] == question]
-    answers_df = answers_df[answers_df["subset"].isin(subsets)]
+
     if question in NUMERICAL_ANSWERS:
         answers_df["answer"] = pd.to_numeric(answers_df["answer"], errors="coerce")
     return answers_df
