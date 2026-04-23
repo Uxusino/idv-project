@@ -1,7 +1,7 @@
 import pandas as pd
 import numpy as np
 import plotly.express as px
-from dash import Dash, dcc, html, Input, Output, State, ctx
+from dash import Dash, dcc, html, Input, Output, State
 from preprocess import get_law_data, sum_laws, question_results, get_questions, SURVEYS
 
 LAW_DF = get_law_data()
@@ -10,41 +10,40 @@ COLORS = ["#FF9A56", "#26CEAA", "#D60270", "#0038A8", "#5BCEFA"]
 app = Dash(__name__)
 
 app.layout = html.Div([
-    html.H4(
+    html.H2(
         children='LGBTQ+ protection laws in European countries and discrimination faced by the members of the community',
         style={
             'textAlign': 'center'
         }),
     html.Div(
-        [html.Div(
-            children=[
-                html.P("Select protection laws:"),
-                dcc.Checklist(
-                    options=[
-                        {'label': 'Broad Protection', 'value': 'BROAD PROT.'},
-                        {'label': 'Employment', 'value': 'EMPLOY.'},
-                        {'label': 'Hate Crime', 'value': 'HATE CRIME'},
-                        {'label': 'Incitement', 'value': 'INCITEMENT'},
-                        {'label': 'Conversion therapies banned', 'value': 'BAN CONV. THERAPIES'},
-                        {'label': 'Same sex marriage', 'value': 'SAME SEX MARRIAGE'},
-                        {'label': 'Civil unions', 'value': 'CIVIL UNIONS'},
-                        {'label': 'Joint adoption', 'value': 'JOINT ADOPTION'},
-                        {'label': 'Second parent adoption', 'value': 'SECOND PARENT ADOPTION'},
-                    ],
-                    value=['BROAD PROT.', 'EMPLOY.', 'HATE CRIME', 'INCITEMENT',
-                        'BAN CONV. THERAPIES', 'SAME SEX MARRIAGE', 'CIVIL UNIONS',
-                        'JOINT ADOPTION', 'SECOND PARENT ADOPTION'],
-                    id="checklist",
-                ),
-
-            ],
+        [
+            html.Div(
+                [
+                    html.P("Select protection laws:"),
+                    dcc.Checklist(
+                        options=[
+                            {'label': 'Broad Protection', 'value': 'BROAD PROT.'},
+                            {'label': 'Employment', 'value': 'EMPLOY.'},
+                            {'label': 'Hate Crime', 'value': 'HATE CRIME'},
+                            {'label': 'Incitement', 'value': 'INCITEMENT'},
+                            {'label': 'Conversion therapies banned', 'value': 'BAN CONV. THERAPIES'},
+                            {'label': 'Same sex marriage', 'value': 'SAME SEX MARRIAGE'},
+                            {'label': 'Civil unions', 'value': 'CIVIL UNIONS'},
+                            {'label': 'Joint adoption', 'value': 'JOINT ADOPTION'},
+                            {'label': 'Second parent adoption', 'value': 'SECOND PARENT ADOPTION'},
+                        ],
+                        value=['BROAD PROT.', 'EMPLOY.', 'HATE CRIME', 'INCITEMENT',
+                            'BAN CONV. THERAPIES', 'SAME SEX MARRIAGE', 'CIVIL UNIONS',
+                            'JOINT ADOPTION', 'SECOND PARENT ADOPTION'],
+                        id="checklist",
+                    ),
+                ],
             style={
                 'padding': 10,
-                "wordWrap": "breakWord",
             }
         ),
         html.Div(
-            children = [
+            [
                 dcc.Graph(
                     id="graph",
                     config={"displayModeBar": False},
@@ -56,7 +55,7 @@ app.layout = html.Div([
             }
         ),
         html.Div(
-            children=[
+            [
                 html.P("Select survey:"),
                 dcc.Dropdown(
                     options=SURVEYS,
@@ -69,19 +68,29 @@ app.layout = html.Div([
                 ),
                 dcc.Store(id="selectedCountry", data=None),
                 dcc.Graph(id="bars"),
-                html.Pre(id="bars_0")
+                html.Pre(id="bars_0"),
+                dcc.Markdown('''
+                    ### References
+                    [Sexual Orientation Laws in the World](https://www.kaggle.com/datasets/mpwolke/cusersmarildownloadsomophobiacsv) by Marília Prata, 2021
+                    
+                    [EU LGBT Survey](https://www.kaggle.com/datasets/ruslankl/european-union-lgbt-survey-2012?select=LGBT_Survey_DailyLife.csv) by Ruslan Klymentiev, 2012
+                '''),
             ],
             style={
                 "padding": 10
             }
-        )],
+        ),
+        
+        ],
         style={
             'display': 'flex',
             'flexDirection': 'row',
             'position': 'fixed'
         }
-    )
-])
+    ),
+    
+    ],
+)
 
 @app.callback(
     Output("graph", "figure"),
