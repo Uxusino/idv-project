@@ -41,7 +41,6 @@ app.layout = html.Div([
             style={
                 'padding': 10,
                 "wordWrap": "breakWord",
-                "max_width": 250
             }
         ),
         html.Div(
