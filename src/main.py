@@ -91,7 +91,8 @@ app.layout = html.Div([
     
     ],
     style={
-        'fontFamily': 'Arial'
+        'fontFamily': 'Arial',
+        'hight': '1000px' 
     }
 )
 
@@ -108,6 +109,8 @@ def display_choropleth(law_values):
                     scope="europe",
                     )
     fig.update_layout(margin={"r":0,"t":0,"l":0,"b":0}, clickmode="event+select")
+    fig.layout.height = 800
+    fig.layout.width = 800
     fig.update_geos(
         scope="europe",
         resolution=50
