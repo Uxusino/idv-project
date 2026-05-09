@@ -20,7 +20,7 @@ app.layout = html.Div([
             html.Div(
                 [
                     html.P("Select protection laws:",
-                           title="If a law is in force, it adds +2 to the sum; laws applied partially add +1",
+                           title="If a law is in force, it adds +2 to the sum; laws applied partially add +1\nHover over a law to learn more details",
                            style={
                                "cursor": "help",
                                "textDecoration": "underline dotted"
@@ -29,25 +29,74 @@ app.layout = html.Div([
                         options=[
                             {
                                 'label': html.Span(
-                                    'Constitutional protection'
+                                    'Constitutional protection',
+                                    title="Constitution explicitly includes sexual orientation and gender identity into their non-discrimination clauses"
                                 ),
                                 'value': 'CONST.'
                             },
                             {
                                 'label': html.Span(
                                     'Broad Protection',
-                                    title=""
+                                    title="Legal protections against discrimination in multiple domains"
                                 ),
                                 'value': 'BROAD PROT.'
                             },
-                            {'label': 'Employment', 'value': 'EMPLOY.'},
-                            {'label': 'Hate crime', 'value': 'HATE CRIME'},
-                            {'label': 'Incitement', 'value': 'INCITEMENT'},
-                            {'label': 'Conversion therapies banned', 'value': 'BAN CONV. THERAPIES'},
-                            {'label': 'Same sex marriage', 'value': 'SAME SEX MARRIAGE'},
-                            {'label': 'Civil unions', 'value': 'CIVIL UNIONS'},
-                            {'label': 'Joint adoption', 'value': 'JOINT ADOPTION'},
-                            {'label': 'Second parent adoption', 'value': 'SECOND PARENT ADOPTION'},
+                            {
+                                'label': html.Span(
+                                    'Employment',
+                                    title="Legal protections against dicrimination in employment"
+                                ),
+                                'value': 'EMPLOY.'
+                            },
+                            {
+                                'label': html.Span(
+                                    'Hate crime',
+                                    title="Regulations on criminal liability for crimes committed on the basis of the victim's sexual orientation or gender identity"
+                                ),
+                                'value': 'HATE CRIME'
+                            },
+                            {
+                                'label': html.Span(
+                                    'Incitement',
+                                    title="Prohibition of incitement to violence, hatred or discrimination"
+                                ),
+                                'value': 'INCITEMENT'
+                            },
+                            {
+                                'label': html.Span(
+                                    'Conversion therapies banned',
+                                    title="Regulation of harmful practices aimed to modify a person's sexual orientation, gender identity or gender expression"
+                                ),
+                                'value': 'BAN CONV. THERAPIES'
+                            },
+                            {
+                                'label': html.Span(
+                                    'Same-sex marriage',
+                                    title="Legalization of same-sex marriage on an equal footing as heterosexual couples"
+                                ),
+                                'value': 'SAME SEX MARRIAGE'
+                            },
+                            {
+                                'label': html.Span(
+                                    'Civil unions',
+                                    title="Legalization of same-sex partnership recognition in a form of a civil union"
+                                ),
+                                'value': 'CIVIL UNIONS'
+                            },
+                            {
+                                'label': html.Span(
+                                    'Joint adoption',
+                                    title="Legalization of a process that allows a same-sex couple to adopt a child together"
+                                ),
+                                'value': 'JOINT ADOPTION'
+                            },
+                            {
+                                'label': html.Span(
+                                    'Second parent adoption',
+                                    title="Legalization of a process that allows a person to adopt the child of their same-sex partner"
+                                ),
+                                'value': 'SECOND PARENT ADOPTION'
+                            },
                         ],
                         value=['CONST.', 'BROAD PROT.', 'EMPLOY.', 'HATE CRIME', 'INCITEMENT',
                             'BAN CONV. THERAPIES', 'SAME SEX MARRIAGE', 'CIVIL UNIONS',
@@ -94,6 +143,8 @@ app.layout = html.Div([
                     [Sexual Orientation Laws in the World](https://www.kaggle.com/datasets/mpwolke/cusersmarildownloadsomophobiacsv) by Marília Prata, 2021
                     
                     [EU LGBT Survey](https://www.kaggle.com/datasets/ruslankl/european-union-lgbt-survey-2012?select=LGBT_Survey_DailyLife.csv) by Ruslan Klymentiev, 2012
+                             
+                    [ILGA World maps](https://ilga.org/ilga-world-maps/)
                 '''),
             ],
             style={
@@ -111,8 +162,7 @@ app.layout = html.Div([
     
     ],
     style={
-        'fontFamily': 'Arial',
-        'hight': '1000px' 
+        'fontFamily': 'Arial'
     }
 )
 
