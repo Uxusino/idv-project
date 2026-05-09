@@ -11,7 +11,7 @@ app = Dash(__name__)
 
 app.layout = html.Div([
     html.H2(
-        children='LGBTQ+ protection laws in European countries and discrimination faced by the members of the community',
+        children='LGBTQ+ protection laws in EU countries and discrimination faced by the members of the community',
         style={
             'textAlign': 'center'
         }),
