@@ -129,11 +129,13 @@ app.layout = html.Div([
                 dcc.Dropdown(
                     options=SURVEYS,
                     value=next(iter(SURVEYS)),
-                    id="dropdownSurvey"
+                    id="dropdownSurvey",
+                    searchable=False,
                 ),
                 html.P("Select question:"),
                 dcc.Dropdown(
-                    id="dropdownQuestion"
+                    id="dropdownQuestion",
+                    maxHeight=300,
                 ),
                 dcc.Store(id="selectedCountry", data=None),
                 dcc.Graph(id="bars"),
