@@ -1,7 +1,7 @@
 import pandas as pd
 import numpy as np
 import plotly.express as px
-from dash import Dash, dcc, html, Input, Output, State
+from dash import Dash, dcc, html, Input, Output, State, ctx
 from preprocess import get_law_data, sum_laws, question_results, get_questions, SURVEYS
 
 LAW_DF = get_law_data()
@@ -37,6 +37,8 @@ app.layout = html.Div([
                             'JOINT ADOPTION', 'SECOND PARENT ADOPTION'],
                         id="checklist",
                     ),
+                    dcc.Button("Select all", id="select-all", n_clicks=0, style={"margin": 2}),
+                    dcc.Button("Clear all", id="clear-all", n_clicks=0, style={"margin": 2})
                 ],
             style={
                 'padding': 10,
@@ -95,6 +97,23 @@ app.layout = html.Div([
         'hight': '1000px' 
     }
 )
+
+@app.callback(
+    Output("checklist", "value"),
+    Input("select-all", "n_clicks"),
+    Input("clear-all", "n_clicks"),
+    prevent_initial_call=True
+)
+def select_or_clear(select_btn, clear_btn):
+    check = []
+    if "select-all" == ctx.triggered_id:
+        check = ['BROAD PROT.', 'EMPLOY.', 'HATE CRIME', 'INCITEMENT',
+                'BAN CONV. THERAPIES', 'SAME SEX MARRIAGE', 'CIVIL UNIONS',
+                'JOINT ADOPTION', 'SECOND PARENT ADOPTION']
+    elif "clear-all" == ctx.triggered_id:
+        check = []
+    return check
+
 
 @app.callback(
     Output("graph", "figure"),
