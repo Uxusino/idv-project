@@ -19,12 +19,29 @@ app.layout = html.Div([
         [
             html.Div(
                 [
-                    html.P("Select protection laws:"),
+                    html.P("Select protection laws:",
+                           title="If a law is in force, it adds +2 to the sum; laws applied partially add +1",
+                           style={
+                               "cursor": "help",
+                               "textDecoration": "underline dotted"
+                           }),
                     dcc.Checklist(
                         options=[
-                            {'label': 'Broad Protection', 'value': 'BROAD PROT.'},
+                            {
+                                'label': html.Span(
+                                    'Constitutional protection'
+                                ),
+                                'value': 'CONST.'
+                            },
+                            {
+                                'label': html.Span(
+                                    'Broad Protection',
+                                    title=""
+                                ),
+                                'value': 'BROAD PROT.'
+                            },
                             {'label': 'Employment', 'value': 'EMPLOY.'},
-                            {'label': 'Hate Crime', 'value': 'HATE CRIME'},
+                            {'label': 'Hate crime', 'value': 'HATE CRIME'},
                             {'label': 'Incitement', 'value': 'INCITEMENT'},
                             {'label': 'Conversion therapies banned', 'value': 'BAN CONV. THERAPIES'},
                             {'label': 'Same sex marriage', 'value': 'SAME SEX MARRIAGE'},
@@ -32,7 +49,7 @@ app.layout = html.Div([
                             {'label': 'Joint adoption', 'value': 'JOINT ADOPTION'},
                             {'label': 'Second parent adoption', 'value': 'SECOND PARENT ADOPTION'},
                         ],
-                        value=['BROAD PROT.', 'EMPLOY.', 'HATE CRIME', 'INCITEMENT',
+                        value=['CONST.', 'BROAD PROT.', 'EMPLOY.', 'HATE CRIME', 'INCITEMENT',
                             'BAN CONV. THERAPIES', 'SAME SEX MARRIAGE', 'CIVIL UNIONS',
                             'JOINT ADOPTION', 'SECOND PARENT ADOPTION'],
                         id="checklist",
@@ -49,7 +66,8 @@ app.layout = html.Div([
                 dcc.Graph(
                     id="graph",
                     config={"displayModeBar": False},
-                    clear_on_unhover=True
+                    clear_on_unhover=True,
+                    responsive=False
                 )
             ],
             style={
@@ -107,7 +125,7 @@ app.layout = html.Div([
 def select_or_clear(select_btn, clear_btn):
     check = []
     if "select-all" == ctx.triggered_id:
-        check = ['BROAD PROT.', 'EMPLOY.', 'HATE CRIME', 'INCITEMENT',
+        check = ['CONST.', 'BROAD PROT.', 'EMPLOY.', 'HATE CRIME', 'INCITEMENT',
                 'BAN CONV. THERAPIES', 'SAME SEX MARRIAGE', 'CIVIL UNIONS',
                 'JOINT ADOPTION', 'SECOND PARENT ADOPTION']
     elif "clear-all" == ctx.triggered_id:
